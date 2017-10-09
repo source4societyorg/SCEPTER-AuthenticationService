@@ -1,17 +1,34 @@
 {
   "name": "SCEPTER-AuthenticationService",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Authentication Service for the SCEPTER Framework",
   "main": "handler.js",
   "repository": "https://github.com/source4societyorg/SCEPTER-AuthenticationService",
   "author": "Source4Society.Org",
   "license": "AGPL-3.0",
-  "private": false, 
+  "private": false,
+  "scripts": {
+    "test": "eslint *.js && jest --coverage",
+    "sls": "sls"
+  },
   "dependencies": {
-    "@source4society/scepter-dynamodb-lib": "^0.0.1",
+    "@source4society/scepter-dynamodb-lib": "0.0.6",
     "aws-sdk": "^2.149.0",
-    "eslint": "^4.10.0",
+    "bcrypt": "^1.0.3",
+    "jsonwebtoken": "auth0/node-jsonwebtoken",
     "mime-types": "^2.1.17",
     "serverless": "^1.24.1"
+  },
+  "devDependencies": {
+    "docco": "^0.7.0",
+    "eslint": "^4.10.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "jest-cli": "^21.2.1",
+    "jwt-decode": "^2.2.0",
+    "uuidv4": "^0.5.0"
   }
 }

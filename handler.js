@@ -1,16 +1,26 @@
-'use strict';
+'use strict'
+
+const AuthService = require('./service')
+
+// This makes it easier to mock later
+global.service = new AuthService(process.env.STAGE, process.env.CREDENTIALS_PATH)
 
 module.exports.authenticate = (event, context, callback) => {
-  const response = {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: 'Go Serverless v1.0! Your function executed successfully!',
-      input: event,
-    }),
-  };
-
-  callback(null, response);
-
-  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // callback(null, { message: 'Go Serverless v1.0! Your function executed successfully!', event });
-};
+  const username = event.username
+  const password = event.password
+  const service = global.service
+  try {
+    const authenticationCallback = (err, data) => {
+      if (err) {
+        callback(null, { status: false, errors: err })
+      } else if (Object.keys(data).length > 0) {
+        callback(null, { status: true, result: {jwt: data} })
+      } else {
+        callback(null, { status: false, errors: { message: 'Invalid username' } })
+      }
+    }
+    service.authenticate(authenticationCallback, username, password)
+  } catch (error) {
+    callback(null, { status: false, errors: {message: error, code: 403} })
+  }
+}
