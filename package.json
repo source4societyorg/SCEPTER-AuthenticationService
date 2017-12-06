@@ -1,0 +1,17 @@
+{
+  "name": "SCEPTER-AuthenticationService",
+  "version": "0.0.1",
+  "description": "Authentication Service for the SCEPTER Framework",
+  "main": "handler.js",
+  "repository": "https://github.com/source4societyorg/SCEPTER-AuthenticationService",
+  "author": "Source4Society.Org",
+  "license": "AGPL-3.0",
+  "private": false, 
+  "dependencies": {
+    "@source4society/scepter-dynamodb-lib": "^0.0.1",
+    "aws-sdk": "^2.149.0",
+    "eslint": "^4.10.0",
+    "mime-types": "^2.1.17",
+    "serverless": "^1.24.1"
+  }
+}
