@@ -43,7 +43,7 @@ class AuthService {
         if (err) {
           callback(err)
         } else if (res === false) {
-          callback(new Error('Invalid password', 403))
+          callback(new Error('Invalid password'))
         } else {
           this.createJwt(userData, username, callback)
         }

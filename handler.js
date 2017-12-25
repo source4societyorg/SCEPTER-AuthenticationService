@@ -12,7 +12,7 @@ module.exports.authenticate = (event, context, callback) => {
   try {
     const authenticationCallback = (err, data) => {
       if (err) {
-        callback(null, { status: false, errors: err })
+        callback(null, { status: false, errors: { message: err.message } })
       } else if (Object.keys(data).length > 0) {
         callback(null, { status: true, result: {jwt: data} })
       } else {
