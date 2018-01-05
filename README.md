@@ -24,7 +24,7 @@ The repository comes with `./credentials.json` simlinked to  their respective fi
 
 Currently the library only supports the `aws` provider, but we hope to support others in the future.
 
-To setup the `credentials.json` you can use the following boilerplate (just prefill your credentials):
+If you are using SCEPTER, just create a simlink to your projects `config/credentials.json`. Otherwise you can create a credentials.json in your service folder. Your configuration should have the `jwtKeySecret`, `tokenDuration`, and `userTableName` properties in addition to the standard provider configuration:
 
     {
         "environments": {
@@ -40,20 +40,18 @@ To setup the `credentials.json` you can use the following boilerplate (just pref
                 "jwtKeySecret": "chooseasecret", 
                 "tokenDuration": "30d",
                 "userTableName": "sometablename", 
-                "usernameTableName": "someothertablename"
             }
         }
     }
 
 This service currently relies on AWS [DynamoDB](https://aws.amazon.com/dynamodb/) to store the user records. Future releases will abstract this dependence away and allow for greater flexibility with regards to how the data can be stored and accessed. 
 
-For now, two tables in DynamoDB must be configured separately with a primary key on `username` for the usernameTableName table and `userId` for the userTableName table.
+There are two types of records to be stored in the user table under the recordType property: `user-id` and `user-data`. The `user-id` records consist of two properties, a `recordId` consisting of the username, and a `userId` consisting of a guid. This guid maps to the corresponding `user-data` record containing the `passwordHash`, `created` timestamp, and `roles` list.
 
-If you are looking for a service to add/remove user accounts to these tables, see [SCEPTER-UserService](https://github.com/source4societyorg/SCEPTER-UserService)
 
 ## Deployment
 
-See [Serverless.com](https://www.serverles.com) for information on how to deploy services to various cloud providers. 
+See [SCEPTER-command-service](https://github.com:source4societyorg/SCEPTER-command-service) and [Serverless.com](https://www.serverless.com) for information on how to deploy services to various cloud providers. 
 
 
 ## Usage

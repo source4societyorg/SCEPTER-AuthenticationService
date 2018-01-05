@@ -10,12 +10,11 @@
     ramda "^0.24.1"
     url-parse "^1.1.9"
 
-"@source4society/scepter-dynamodb-lib@0.0.6":
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/@source4society/scepter-dynamodb-lib/-/scepter-dynamodb-lib-0.0.6.tgz#676cd3e999b298a7c11fc72ce5529c1f43dfa166"
+"@source4society/scepter-dynamodb-lib@0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@source4society/scepter-dynamodb-lib/-/scepter-dynamodb-lib-0.0.8.tgz#9b6f913d27c230645ae76a53ca40567328b4b9b8"
   dependencies:
     aws-sdk "^2.145.0"
-    eslint "^4.10.0"
 
 "@types/graphql@0.10.2":
   version "0.10.2"

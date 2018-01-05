@@ -14,15 +14,13 @@ class AuthService {
     this.dynamoDB = new DynamoDB()
     this.dynamoDB.setConfiguration(this.credentials, stage)
     this.userTableName = this.credentials.environments[stage].userTableName
-    this.usernameTableName = this.credentials.environments[stage].usernameTableName
     this.tokenDuration = this.credentials.environments[stage].tokenDuration
   }
 
   authenticate (callback, username = '', password = '') {
-    this.dynamoDB.getItem(this.usernameTableName, { username: username }, (err, data) => {
+    this.dynamoDB.getItem(this.userTableName, { recordId: username, recordType: 'user-id' }, null, (err, data) => {
       this.obtainPasswordHash(err, data, username, password, callback)
-    }
-    )
+    })
   }
 
   obtainPasswordHash (err, userData, username, password, callback) {
@@ -30,7 +28,7 @@ class AuthService {
       callback(err || {message: 'Username not found', code: 404})
     } else {
       const userId = userData.Item.userId
-      this.dynamoDB.getItem(this.userTableName, { userId: userId }, (err, userData) => this.validatePassword(err, userData, username, password, callback))
+      this.dynamoDB.getItem(this.userTableName, { recordId: userId, recordType: 'user-data' }, null, (err, userData) => this.validatePassword(err, userData, username, password, callback))
     }
   }
 
