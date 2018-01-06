@@ -11,7 +11,9 @@ test('authenticate will return a valid jwt when matching username and password i
 
   // mock DynamoDB
   const getItemMock = (tableName, key, projectionExpression, foundUserCallback) => {
-    if (key.recordId === 'fakeusername') {
+    if (key.recordId === 'fakeusername' && key.recordType === 'user-id') {
+      foundUserCallback(null, false)
+    } else if (key.recordId === 'fakeusername' && key.recordType === 'user-email') {
       foundUserCallback(null, {
         Item: {
           userId: 'fakeuserid',
@@ -50,9 +52,9 @@ test('authenticate will return a valid jwt when matching username and password i
 test('authenticate will return an error message when username not found', (done) => {
   const service = new AuthService('test', './test/credentials.json')
   // mock DynamoDB
-  const getItemMock = (tableName, key, projectionExpression, foundUserCallback) => {
+  const getItemMock = (tableName, key, projectionExpression, foundUserCallback) => (
     foundUserCallback(new Error('Cant find user', 404))
-  }
+  )
 
   service.dynamoDB = { getItem: getItemMock }
 
@@ -72,10 +74,12 @@ test('authenticate will return an error message when username found but password
 
   // mock DynamoDB
   const getItemMock = (tableName, key, projectionExpression, foundUserCallback) => {
-    if (key.recordId === 'fakeusername') {
+    if (key.recordId === 'fakeuserid@fakeemail' && key.recordType === 'user-email') {
+      foundUserCallback(null, false)
+    } else if (key.recordId === 'fakeuserid@fakeemail' && key.recordType === 'user-id') {
       foundUserCallback(null, {
         Item: {
-          userId: 'fakeuserid',
+          userId: 'fakeuserid@fakeemail',
           recordId: 'fakeusername'
         }
       })
@@ -98,7 +102,7 @@ test('authenticate will return an error message when username found but password
     done()
   }
 
-  service.authenticate(callback, 'fakeusername', 'wrongfakepassword')
+  service.authenticate(callback, 'fakeuserid@fakeemail', 'wrongfakepassword')
 })
 
 test('authenticate will return an error message when errors occur seeking user data with user id', (done) => {

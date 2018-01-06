@@ -17,36 +17,47 @@ class AuthService {
     this.tokenDuration = this.credentials.environments[stage].tokenDuration
   }
 
-  authenticate (callback, username = '', password = '') {
-    this.dynamoDB.getItem(this.userTableName, { recordId: username, recordType: 'user-id' }, null, (err, data) => {
-      this.obtainPasswordHash(err, data, username, password, callback)
+  authenticate (callback, username = '', password = '', recordType, lastPass = false) {
+   
+    if (typeof recordType === 'undefined') {
+      recordType = username.indexOf('@') > -1 ? 'user-email' : 'user-id';
+    }
+
+    this.dynamoDB.getItem(this.userTableName, { recordId: username, recordType: recordType }, null, (err, data) => {
+      if ((typeof err === 'undefined' || err === null) && typeof data.Item !== 'undefined' ) {
+        this.obtainPasswordHash(data, username, password, callback)
+      } else {
+        if (!lastPass) {
+          this.authenticate(callback, username, password, (recordType === 'user-email' ? 'user-id' : 'user-email'), true)
+        } else {
+          callback(err || {message: 'Username not found', code: 404})
+        }
+      }
     })
   }
 
-  obtainPasswordHash (err, userData, username, password, callback) {
-    if (err || typeof userData.Item === 'undefined') {
-      callback(err || {message: 'Username not found', code: 404})
-    } else {
-      const userId = userData.Item.userId
-      this.dynamoDB.getItem(this.userTableName, { recordId: userId, recordType: 'user-data' }, null, (err, userData) => this.validatePassword(err, userData, username, password, callback))
-    }
+  obtainPasswordHash (userData, username, password, callback) {
+    const userId = userData.Item.userId
+    this.dynamoDB.getItem(this.userTableName, { recordId: userId, recordType: 'user-data' }, null, (err, userData) => {
+      if (typeof err !== 'undefined' && err !== null) {
+        callback(err)
+      } else {
+        this.validatePassword(userData, username, password, callback)
+      }
+    })  
   }
 
-  validatePassword (err, userData, username, password, callback) {
-    if (err) {
-      callback(err)
-    } else {
-      const hash = userData.Item.passwordHash
-      this.bcrypt.compare(password, hash, (err, res) => {
-        if (err) {
-          callback(err)
-        } else if (res === false) {
-          callback(new Error('Invalid password'))
-        } else {
-          this.createJwt(userData, username, callback)
-        }
-      })
-    }
+  validatePassword (userData, username, password, callback) {
+    const hash = userData.Item.passwordHash
+    this.bcrypt.compare(password, hash, (err, res) => {
+      if (err) {
+        callback(err)
+      } else if (res === false) {
+        callback(new Error('Invalid password'))
+      } else {
+        this.createJwt(userData, username, callback)
+      }
+    })
   }
 
   createJwt (userData, username, callback) {
