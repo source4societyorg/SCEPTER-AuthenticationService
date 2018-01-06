@@ -53,7 +53,7 @@ class AuthService {
 
   createJwt (userData, username, callback) {
     try {
-      let finalUserData = Object.assign(userData.Item, {username: username})
+      let finalUserData = Object.assign(userData.Item, {username: username, roles: userData.Item.roles.values})
       let jwt = this.jsonwebtoken.sign(finalUserData, this.keySecret, { expiresIn: this.tokenDuration })
       callback(null, jwt)
     } catch (error) {
