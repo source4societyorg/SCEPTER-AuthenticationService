@@ -27,12 +27,13 @@ class AuthService {
     })
   }
 
-  obtainPasswordHash (userData, username, password, callback) {
-    const userId = userData.Item.userId
+  obtainPasswordHash (usernameData, username, password, callback) {
+    const userId = usernameData.Item.userId
     this.dynamoDB.getItem(this.userTableName, { recordId: userId, recordType: 'user-data' }, null, (err, userData) => {
       if (typeof err !== 'undefined' && err !== null) {
         callback(err)
       } else {
+        userData.Item.roles = userData.Item.roles.values || userData.Item.roles
         this.validatePassword(userData, username, password, callback)
       }
     })  
