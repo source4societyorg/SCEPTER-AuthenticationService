@@ -1,20 +1,22 @@
 'use strict'
 
 const DynamoDB = require('@source4society/scepter-dynamodb-lib')
+const immutable = require('immutable');
 
 class AuthService {
-  constructor (stage = 'dev', credentialsPath = './credentials.json') {
+  constructor (stage = 'dev', credentialsPath = './credentials.json', parametersPath = './parameters.json') {
     const bcrypt = require('bcrypt')
     const jsonwebtoken = require('jsonwebtoken')
 
     this.bcrypt = bcrypt
     this.jsonwebtoken = jsonwebtoken
-    this.credentials = require(credentialsPath)
-    this.keySecret = this.credentials.environments[stage].jwtKeySecret
+    this.credentials = immutable.fromJS(require(credentialsPath))
+    this.parameters = immutable.fromJS(require(parametersPath))
+    this.keySecret = this.parameters.getIn(['environments', stage, 'jwtKeySecret'])
     this.dynamoDB = new DynamoDB()
     this.dynamoDB.setConfiguration(this.credentials, stage)
-    this.userTableName = this.credentials.environments[stage].userTableName
-    this.tokenDuration = this.credentials.environments[stage].tokenDuration
+    this.userTableName = this.parameters.getIn(['environments', stage, 'userTableName'], 'users')
+    this.tokenDuration = this.parameters.getIn(['environments', stage, 'tokenDuration'], '3h')
   }
 
   authenticate (callback, username = '', password = '') {
@@ -61,6 +63,7 @@ class AuthService {
       callback(error)
     }
   }
+
 };
 
 module.exports = AuthService

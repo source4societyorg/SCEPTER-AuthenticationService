@@ -1,0 +1,30 @@
+service: ${file(./config/service_name.yml):service}-${opt:stage, 'dev'}
+provider:
+  name: azure
+  location: ${opt:location, 'West US'}
+  environment:
+    STAGE: ${self:provider.stage}
+    SLS_DEBUG: "*"
+    PROVIDER: 'azure'
+plugins: 
+  - serverless-azure-functions
+
+functions:
+  authenticate:
+    handler: handler.authenticate
+    events:
+      - http: true,
+        x-azure-settings:
+          authLevel : anonymous     
+package:
+  exclude: 
+    - 'test/**'
+    - 'coverage/**'
+    - 'LICENSE'
+    - 'README.md'
+    - '.travis.yml'
+    - 'docs/**'
+    - 'config/**'
+    - '.gitignore'
+    - '.git/**'
+    - 'node_modules/**'
