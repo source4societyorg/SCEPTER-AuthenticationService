@@ -7,6 +7,12 @@ provider:
     STAGE: ${self:provider.stage}
     SLS_DEBUG: "*"
     PROVIDER: 'aws'
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - lambda:InvokeFunction
+        - lambda:InvokeAsync
+      Resource: "*"
 functions:
   authenticate:
     handler: handler.authenticate

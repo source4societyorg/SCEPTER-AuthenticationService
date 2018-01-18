@@ -12,15 +12,15 @@ class AuthService {
     this.jsonwebtoken = jsonwebtoken
     this.credentials = immutable.fromJS(require(credentialsPath))
     this.parameters = immutable.fromJS(require(parametersPath))
-    this.keySecret = this.parameters.getIn(['environments', stage, 'jwtKeySecret'])
+    this.keySecret = this.credentials.getIn(['environments', stage, 'jwtKeySecret'])
     this.dynamoDB = new DynamoDB()
     this.dynamoDB.setConfiguration(this.credentials, stage)
-    this.userTableName = this.parameters.getIn(['environments', stage, 'userTableName'], 'users')
+    this.userTable = this.parameters.getIn(['environments', stage, 'userTable'], 'users')
     this.tokenDuration = this.parameters.getIn(['environments', stage, 'tokenDuration'], '3h')
   }
 
   authenticate (callback, username = '', password = '') {
-    this.dynamoDB.getItem(this.userTableName, { recordId: username, recordType: 'user-name' }, null, (err, data) => {
+    this.dynamoDB.getItem(this.userTable, { recordId: username, recordType: 'user-name' }, null, (err, data) => {
       if ((typeof err === 'undefined' || err === null) && typeof data.Item !== 'undefined' ) {
         this.obtainPasswordHash(data, username, password, callback)       
       } else {
@@ -31,7 +31,7 @@ class AuthService {
 
   obtainPasswordHash (usernameData, username, password, callback) {
     const userId = usernameData.Item.userId
-    this.dynamoDB.getItem(this.userTableName, { recordId: userId, recordType: 'user-data' }, null, (err, userData) => {
+    this.dynamoDB.getItem(this.userTable, { recordId: userId, recordType: 'user-data' }, null, (err, userData) => {
       if (typeof err !== 'undefined' && err !== null) {
         callback(err)
       } else {
