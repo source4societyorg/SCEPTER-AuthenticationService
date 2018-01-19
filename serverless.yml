@@ -12,7 +12,11 @@ provider:
       Action:
         - lambda:InvokeFunction
         - lambda:InvokeAsync
-      Resource: "*"
+      Resource: "*"       
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+      Resource: "arn:aws:dynamodb:*:${file(./credentials.json):environments.${self:provider.stage}.provider.aws.account}:table/${file(./parameters.json):environments.${self:provider.stage}.userTable}" 
 functions:
   authenticate:
     handler: handler.authenticate
