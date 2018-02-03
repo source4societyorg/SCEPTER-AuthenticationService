@@ -13,7 +13,7 @@ class AuthService {
     this.credentials = immutable.fromJS(require(credentialsPath))
     this.parameters = immutable.fromJS(require(parametersPath))
     this.keySecret = this.credentials.getIn(['environments', stage, 'jwtKeySecret'])
-    this.dynamoDB = new DynamoDB(stage, credentialsPath, parametersPath)
+    this.dynamoDB = new DynamoDB()
     this.dynamoDB.setConfiguration(this.credentials, stage)
     this.userTable = this.parameters.getIn(['environments', stage, 'userTable'], 'users')
     this.tokenDuration = this.parameters.getIn(['environments', stage, 'tokenDuration'], '3h')

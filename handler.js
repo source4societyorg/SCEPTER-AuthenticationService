@@ -3,7 +3,7 @@
 const AuthService = require('./service')
 
 // This makes it easier to mock later
-global.service = new AuthService(process.env.STAGE, process.env.CREDENTIALS_PATH)
+global.service = new AuthService(process.env.STAGE, process.env.CREDENTIALS_PATH, process.env.PARAMETERS_PATH)
 
 module.exports.authenticate = (event, context, callback) => {
   const username = event.username
