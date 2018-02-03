@@ -1,7 +1,7 @@
 'use strict'
 
 const DynamoDB = require('@source4society/scepter-dynamodb-lib')
-const immutable = require('immutable');
+const immutable = require('immutable')
 
 class AuthService {
   constructor (stage = 'dev', credentialsPath = './credentials.json', parametersPath = './parameters.json') {
@@ -13,7 +13,7 @@ class AuthService {
     this.credentials = immutable.fromJS(require(credentialsPath))
     this.parameters = immutable.fromJS(require(parametersPath))
     this.keySecret = this.credentials.getIn(['environments', stage, 'jwtKeySecret'])
-    this.dynamoDB = new DynamoDB()
+    this.dynamoDB = new DynamoDB(stage, credentialsPath, parametersPath)
     this.dynamoDB.setConfiguration(this.credentials, stage)
     this.userTable = this.parameters.getIn(['environments', stage, 'userTable'], 'users')
     this.tokenDuration = this.parameters.getIn(['environments', stage, 'tokenDuration'], '3h')
@@ -21,10 +21,10 @@ class AuthService {
 
   authenticate (callback, username = '', password = '') {
     this.dynamoDB.getItem(this.userTable, { recordId: username, recordType: 'user-name' }, null, (err, data) => {
-      if ((typeof err === 'undefined' || err === null) && typeof data.Item !== 'undefined' ) {
-        this.obtainPasswordHash(data, username, password, callback)       
+      if ((typeof err === 'undefined' || err === null) && typeof data.Item !== 'undefined') {
+        this.obtainPasswordHash(data, username, password, callback)
       } else {
-        callback(err || {message: 'Username not found', code: 404})       
+        callback(err || {message: 'Username not found', code: 404})
       }
     })
   }
@@ -38,7 +38,7 @@ class AuthService {
         userData.Item.roles = userData.Item.roles.values || userData.Item.roles
         this.validatePassword(userData, username, password, callback)
       }
-    })  
+    })
   }
 
   validatePassword (userData, username, password, callback) {
@@ -63,7 +63,6 @@ class AuthService {
       callback(error)
     }
   }
-
 };
 
 module.exports = AuthService

@@ -1,0 +1,22 @@
+{
+  "appName":"Test",
+  "shell":"powershell", 
+  "environments": {
+    "development":{
+      "ui": {
+        "webui": {
+          "bucket":"yourbucket"
+        }
+      },
+      "userTable": "users"
+    }, 
+    "production":{
+      "ui": {
+        "webui": {
+          "bucket":"yourbucket"
+        }
+      },
+      "userTable": "users"
+    }
+  }
+}

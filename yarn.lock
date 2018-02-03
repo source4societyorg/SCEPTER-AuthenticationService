@@ -10,9 +10,9 @@
     ramda "^0.24.1"
     url-parse "^1.1.9"
 
-"@source4society/scepter-dynamodb-lib@0.0.14":
-  version "0.0.14"
-  resolved "https://registry.yarnpkg.com/@source4society/scepter-dynamodb-lib/-/scepter-dynamodb-lib-0.0.14.tgz#414202032d27297da35c218ab12f60f981af20ce"
+"@source4society/scepter-dynamodb-lib@0.0.16":
+  version "0.0.16"
+  resolved "https://registry.yarnpkg.com/@source4society/scepter-dynamodb-lib/-/scepter-dynamodb-lib-0.0.16.tgz#e2de5763e0611286126617e38b6f19b97dff4b14"
   dependencies:
     aws-sdk "^2.145.0"
     immutable "^3.8.2"

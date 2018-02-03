@@ -1,6 +1,8 @@
 const testcredentials = './test/credentials.json'
+const testparameters = './test/parameters.json'
 process.env.STAGE = 'test'
 process.env.CREDENTIALS_PATH = testcredentials
+process.env.PARAMETERS_PATH = testparameters
 const handler = require('../handler')
 
 test('handler returns proper response when service succeeds', (done) => {
@@ -35,6 +37,7 @@ test('handler returns error response when service fails', (done) => {
 
   global.service = mockService
   process.env.CREDENTIALS_PATH = testcredentials
+  process.env.PARAMETERS_PATH = testparameters
   handler.authenticate({username: 'someusername', password: 'somepassword'}, null, callback)
 })
 
@@ -52,6 +55,7 @@ test('handler returns error response when username invalid', (done) => {
 
   global.service = mockService
   process.env.CREDENTIALS_PATH = testcredentials
+  process.env.PARAMETERS_PATH = testparameters
   handler.authenticate({username: 'badusername', password: 'somepassword'}, null, callback)
 })
 
@@ -71,5 +75,6 @@ test('handler catches errors and returns information with a 200 status', (done) 
 
   global.service = mockService
   process.env.CREDENTIALS_PATH = testcredentials
+  process.env.PARAMETERS_PATH = testparameters
   handler.authenticate({username: 'badusername', password: 'somepassword'}, null, callback)
 })

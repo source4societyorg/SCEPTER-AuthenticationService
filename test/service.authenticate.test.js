@@ -5,7 +5,7 @@ const jsonDecode = require('jwt-decode')
 const testcredentials = require('./credentials.json')
 
 test('authenticate will return a valid jwt when matching username and password in payload ', (done) => {
-  const service = new AuthService('test', './test/credentials.json')
+  const service = new AuthService('test', './test/credentials.json', './test/parameters.json')
   const salt = bcrypt.genSaltSync(8)
   const hash = bcrypt.hashSync('fakepassword', salt)
 
@@ -50,7 +50,7 @@ test('authenticate will return a valid jwt when matching username and password i
 })
 
 test('authenticate will return an error message when username not found', (done) => {
-  const service = new AuthService('test', './test/credentials.json')
+  const service = new AuthService('test', './test/credentials.json', './test/parameters.json')
   // mock DynamoDB
   const getItemMock = (tableName, key, projectionExpression, foundUserCallback) => (
     foundUserCallback(new Error('Cant find user', 404))
@@ -68,7 +68,7 @@ test('authenticate will return an error message when username not found', (done)
 })
 
 test('authenticate will return an error message when username found but password doesnt match hash', (done) => {
-  const service = new AuthService('test', './test/credentials.json')
+  const service = new AuthService('test', './test/credentials.json', './test/parameters.json')
   const salt = bcrypt.genSaltSync(8)
   const hash = bcrypt.hashSync('fakepassword', salt)
 
@@ -106,7 +106,7 @@ test('authenticate will return an error message when username found but password
 })
 
 test('authenticate will return an error message when errors occur seeking user data with user id', (done) => {
-  const service = new AuthService('test', './test/credentials.json')
+  const service = new AuthService('test', './test/credentials.json', './test/parameters.json')
 
   // mock DynamoDB
   const getItemMock = (tableName, key, projectionExpression, foundUserCallback) => {
@@ -134,7 +134,7 @@ test('authenticate will return an error message when errors occur seeking user d
 })
 
 test('authenticate will return an error message when errors occur using bcrypt', (done) => {
-  const service = new AuthService('test', './test/credentials.json')
+  const service = new AuthService('test', './test/credentials.json', './test/parameters.json')
   const salt = bcrypt.genSaltSync(8)
   const hash = bcrypt.hashSync('fakepassword', salt)
 
@@ -174,7 +174,7 @@ test('authenticate will return an error message when errors occur using bcrypt',
 })
 
 test('authenticate will return an error message when errors occur using jsonwebtoken', (done) => {
-  const service = new AuthService('test', './test/credentials.json')
+  const service = new AuthService('test', './test/credentials.json', './test/parameters.json')
   const salt = bcrypt.genSaltSync(8)
   const hash = bcrypt.hashSync('fakepassword', salt)
 
