@@ -2,7 +2,7 @@ service: ${file(./config/service_name.yml):service}
 provider:
   name: aws
   runtime: nodejs6.10
-  stage: ${opt:stage, 'dev'}
+  stage: ${opt:stage, 'development'}
   environment:
     STAGE: ${self:provider.stage}
     SLS_DEBUG: "*"

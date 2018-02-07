@@ -1,4 +1,4 @@
-service: ${file(./config/service_name.yml):service}-${opt:stage, 'dev'}
+service: ${file(./config/service_name.yml):service}-${opt:stage, 'development'}
 provider:
   name: azure
   location: ${opt:location, 'West US'}

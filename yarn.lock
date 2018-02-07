@@ -17,6 +17,20 @@
     aws-sdk "^2.145.0"
     immutable "^3.8.2"
 
+"@source4society/scepter-handlerutilities-lib@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@source4society/scepter-handlerutilities-lib/-/scepter-handlerutilities-lib-1.0.1.tgz#710981ee44a2d6e8f771edf010eb4c8d321b32b1"
+  dependencies:
+    "@source4society/scepter-utility-lib" "^0.0.22"
+
+"@source4society/scepter-utility-lib@^0.0.22":
+  version "0.0.22"
+  resolved "https://registry.yarnpkg.com/@source4society/scepter-utility-lib/-/scepter-utility-lib-0.0.22.tgz#7e783dd691e2d8a3b15a494447f3d62a874dd061"
+
+"@source4society/scepter-utility-lib@^0.0.23":
+  version "0.0.23"
+  resolved "https://registry.yarnpkg.com/@source4society/scepter-utility-lib/-/scepter-utility-lib-0.0.23.tgz#00548bb01c6aa55033d05acb98540117c0819224"
+
 "@types/graphql@0.10.2":
   version "0.10.2"
   resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-0.10.2.tgz#d7c79acbaa17453b6681c80c34b38fcb10c4c08c"
@@ -267,7 +281,7 @@ asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
 
-aws-sdk@^2.145.0, aws-sdk@^2.149.0, aws-sdk@^2.75.0:
+aws-sdk@^2.145.0, aws-sdk@^2.75.0:
   version "2.167.0"
   resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.167.0.tgz#f207dff7f7e9a7883d3b69bd22513444968a36bd"
   dependencies:
@@ -2704,7 +2718,7 @@ mime-db@~1.30.0:
   version "1.30.0"
   resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.30.0.tgz#74c643da2dd9d6a45399963465b26d5ca7d71f01"
 
-mime-types@^2.1.12, mime-types@^2.1.17, mime-types@~2.1.17, mime-types@~2.1.7:
+mime-types@^2.1.12, mime-types@~2.1.17, mime-types@~2.1.7:
   version "2.1.17"
   resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.17.tgz#09d7a393f03e995a79f8af857b70a9e0ab16557a"
   dependencies:
