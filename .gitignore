@@ -8,3 +8,4 @@ yarn-error.log
 /credentials.json
 /parameters.json
 /services.json
+serverless.yml
