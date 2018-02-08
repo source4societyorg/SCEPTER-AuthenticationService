@@ -35,19 +35,18 @@ class AuthService {
   }
 
   authenticate (callback, username, password) {
-    utilities.initiateSequence(this.authenticationSequence(callback, username, password), callback)
+    utilities.initiateHandledSequence((finalCallback, sequenceCallback) => this.authenticationSequence(finalCallback, sequenceCallback, username, password), callback)
   }
 
-  * authenticationSequence (finalCallback, username, password) {
-    let sequenceCallback = yield
+  * authenticationSequence (finalCallback, sequenceCallback, username, password) {
     const userData = yield this.lookupUser(username, sequenceCallback)
     this.validateUserData(userData)
     const passwordHash = userData.Items[0].passwordHash
     const validPassword = yield this.validatePassword(password, passwordHash, sequenceCallback)
-    assert(validPassword)
+    assert(validPassword, 'Invalid password')
     const combinedUserData = Object.assign(userData.Items[0], userData.Items[1])
     const jwt = this.createJwt(combinedUserData)
-    assert(utilities.isNotEmpty(jwt))
+    assert(utilities.isNotEmpty(jwt), 'Could not create JWT')
     finalCallback(null, jwt)
   }
 
@@ -81,7 +80,7 @@ class AuthService {
   prepareErrorResponse (error) {
     return {
       status: false,
-      error: error
+      error: error.message
     }
   }
 

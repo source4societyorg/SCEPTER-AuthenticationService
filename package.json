@@ -1,6 +1,6 @@
 {
   "name": "SCEPTER-AuthenticationService",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "Authentication Service for the SCEPTER Framework",
   "main": "handler.js",
   "repository": "https://github.com/source4societyorg/SCEPTER-AuthenticationService",
@@ -14,7 +14,7 @@
   "dependencies": {
     "@source4society/scepter-dynamodb-lib": "0.0.16",
     "@source4society/scepter-handlerutilities-lib": "^1.0.1",
-    "@source4society/scepter-utility-lib": "^0.0.23",
+    "@source4society/scepter-utility-lib": "^0.0.24",
     "bcrypt": "^1.0.3",
     "immutable": "^3.8.2",
     "jsonwebtoken": "auth0/node-jsonwebtoken",
