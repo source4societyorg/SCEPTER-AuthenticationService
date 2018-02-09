@@ -17,9 +17,9 @@
     aws-sdk "^2.145.0"
     immutable "^3.8.2"
 
-"@source4society/scepter-handlerutilities-lib@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@source4society/scepter-handlerutilities-lib/-/scepter-handlerutilities-lib-1.0.1.tgz#710981ee44a2d6e8f771edf010eb4c8d321b32b1"
+"@source4society/scepter-handlerutilities-lib@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@source4society/scepter-handlerutilities-lib/-/scepter-handlerutilities-lib-1.1.1.tgz#45f25f74382c31924560ba12adec316a67df596e"
   dependencies:
     "@source4society/scepter-utility-lib" "^0.0.22"
 
