@@ -1,6 +1,6 @@
 {
   "name": "SCEPTER-AuthenticationService",
-  "version": "1.3.0",
+  "version": "1.3.3",
   "description": "Authentication Service for the SCEPTER Framework",
   "main": "handler.js",
   "repository": "https://github.com/source4societyorg/SCEPTER-AuthenticationService",
