@@ -147,7 +147,7 @@ test('Prepare error response returns proper error object', () => {
   const mockError = new Error('test error')
   expect(service.prepareErrorResponse(mockError)).toEqual({
     status: false,
-    error: mockError
+    error: mockError.message
   })
 })
 
