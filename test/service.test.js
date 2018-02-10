@@ -14,7 +14,8 @@ test('authenticate method initiates authentication sequence', (done) => {
     expect(data).toEqual('mockjwt')
     done()
   }
-  function * mockAuthenticationSequence (callback, username, password) {
+  function * mockAuthenticationSequence (callback, sequenceCallback, username, password) {
+    expect(typeof sequenceCallback).toEqual('function')
     expect(username).toEqual('username')
     expect(password).toEqual('password')
     callback(null, 'mockjwt')
@@ -59,7 +60,7 @@ test('authenticationSequence will return jwt if user is found and password hash 
   service.validateUserData = mockValidateUserData
   service.validatePassword = mockValidatePassword
   service.createJwt = mockCreateJwt
-  utilities.initiateSequence(service.authenticationSequence(mockCallback, 'username', 'password'), mockCallback)
+  utilities.initiateHandledSequence((finalCallback, sequenceCallback) => service.authenticationSequence(finalCallback, sequenceCallback, 'username', 'password'), mockCallback)
 })
 
 test('validateUserData throws error if data is empty or user is not enabled', () => {
